@@ -1,8 +1,11 @@
 import random
 
 
-names_file = open('./assets/names.txt')
-names_list = names_file.readlines()
+female_names_file = open('./assets/female_names.txt')
+female_names_list = female_names_file.readlines()
+
+male_names_file = open('./assets/male_names.txt')
+male_names_list = male_names_file.readlines()
 
 surnames_file = open('./assets/surnames.txt')
 surnames_list = surnames_file.readlines()
@@ -34,16 +37,23 @@ def generate_npcs(number):
 
 
 def generate_npc():
-    name = names_list[random.randint(0, len(names_list))]
+    gender = get_random_gender()
+    name = get_random_name(gender)
     surname = surnames_list[random.randint(0, len(surnames_list))]
     birth_year = random.randint(start_year - 100, start_year)
-    gender = get_random_gender()
     npc = Npc(name, surname, birth_year, gender)
     return npc
 
 
 def get_random_gender():
     return random.randint(0, 1)
+
+
+def get_random_name(gender):
+    if gender == 0:
+        return male_names_list[random.randint(0, len(male_names_list))]
+    elif gender == 1:
+        return female_names_list[random.randint(0, len(female_names_list))]
 
 
 generate_npcs(1)
