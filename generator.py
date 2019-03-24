@@ -1,17 +1,10 @@
 import random
 from npc import Npc
+from attribute_generator import AttributeGenerator
 
 
-female_names_file = open('./assets/female_names.txt')
-female_names_list = female_names_file.readlines()
-
-male_names_file = open('./assets/male_names.txt')
-male_names_list = male_names_file.readlines()
-
-surnames_file = open('./assets/surnames.txt')
-surnames_list = surnames_file.readlines()
-start_year = 1000
-
+start_year = 2019
+attr = AttributeGenerator()
 
 npcs = []
 
@@ -23,27 +16,14 @@ def generate_npcs(number):
 
 
 def generate_npc():
-    gender = get_random_gender()
-    name = get_random_name(gender)
-    surname = surnames_list[random.randint(0, len(surnames_list))]
-    birth_year = random.randint(start_year - 100, start_year)
-    npc = Npc(name, surname, birth_year, gender)
+    gender = attr.random_gender()
+    name = attr.random_name(gender)
+    surname = attr.random_surname()
+    birth_year = start_year
+    max_age = random.randint(50, 120)
+    npc = Npc(name, surname, birth_year, gender, max_age)
     return npc
-
-
-def get_random_gender():
-    return random.randint(0, 1)
-
-
-def get_random_name(gender):
-    if gender == 0:
-        return male_names_list[random.randint(0, len(male_names_list))]
-    elif gender == 1:
-        return female_names_list[random.randint(0, len(female_names_list))]
 
 
 generate_npcs(1)
 print(npcs[0])
-
-
-
